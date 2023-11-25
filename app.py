@@ -23,7 +23,7 @@ def create_tables():
 
 @app.route('/')
 def homepage():
-    pet_data = db.session.query(Pet.pet_name, Pet.photo_url, Pet.available).all()
+    pet_data = db.session.query(Pet.name, Pet.photo_url, Pet.available).all()
 
     return render_template('homepage.html', pets=pet_data)
 
@@ -33,15 +33,15 @@ def add_pet():
 
     form = PetForm()
     if form.validate_on_submit():
-        pet_name=form.pet_name.data
+        name=form.name.data
         species=form.species.data
         photo_url=form.photo_url.data
         age=form.age.data
         notes=form.notes.data
-        flash(f"Added {pet_name}, {species}, {photo_url}, {age} and {notes}.")
+        flash(f"Added {name}, {species}, {photo_url}, {age} and {notes}.")
         return redirect(url_for('homepage'))
     else:
-        return render_template("add_pet_form.html", form=form)
+        return render_template("petform.html", form=form)
 
 @app.route('/<int:pet_id>/edit', methods=["GET", "POST"])
 def edit_form(pet_id):
@@ -59,4 +59,6 @@ def edit_form(pet_id):
         return redirect(url_for('homepage'))
     else:
         return render_template('edit_petform.html', form=form, pet=pet)
-    
+
+if __name__ == '__main__':
+    app.run(debug=True)
