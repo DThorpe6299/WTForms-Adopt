@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %} Pets {% endblock %}</title>
+</head>
+<body>
+    {% block content %}
+    <h1>List of Pets</h1>
+    {% for pet in pets %}
+        <div class="pet-container">
+            {% if pet.photo_url %}
+                <img class="pet-image" src="{{ pet.photo_url }}" alt="Pet Photo"><br>
+            {% else %}
+                No Photo Available<br>
+            {% endif %}
+            {% if pet.available %}
+                <a href="/{{pet_id}}"><strong>{{ pet.name }} is available</strong></a>
+            {% else %}
+                <a href="/{{pet_id}}"><strong>{{ pet.name }} is not available</strong></a>
+            {% endif %}
+        </div>
+    {% endfor %}
+    {% endblock %}
+</body>
+</html>
